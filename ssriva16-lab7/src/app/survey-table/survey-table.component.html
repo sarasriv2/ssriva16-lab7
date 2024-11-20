@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Survey Application</title>
+  <link rel="stylesheet" href="survey-table.component.scss">
+</head>
+<body>
+    <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Age</th>
+            <th>Feedback</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let response of surveyResponses">
+            <td>{{ response.name }}</td>
+            <td>{{ response.email }}</td>
+            <td>{{ response.age }}</td>
+            <td>{{ response.feedback }}</td>
+          </tr>
+        </tbody>
+      </table>                  
+</body>
+</html>
