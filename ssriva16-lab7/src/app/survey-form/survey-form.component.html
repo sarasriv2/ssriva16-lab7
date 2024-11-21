@@ -1,47 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Survey Form</title>
-  <link rel="stylesheet" href="survey-form.component.scss">
-</head>
-<body>
-    <form [formGroup]="surveyForm" (ngSubmit)="onSubmit()" novalidate>
-        <div class="form-group">
-          <label for="name">Name:</label>
-          <input id="name" formControlName="name" type="text" />
-          <div *ngIf="submitted && f['name'].errors">
-            <small *ngIf="f['name'].errors['required']" class="error">Name is required.</small>
-          </div>
-        </div>
-      
-        <div class="form-group">
-          <label for="email">Email:</label>
-          <input id="email" formControlName="email" type="email" />
-          <div *ngIf="submitted && f['email'].errors">
-            <small *ngIf="f['email'].errors['required']" class="error">Email is required.</small>
-            <small *ngIf="f['email'].errors['email']" class="error">Invalid email format.</small>
-          </div>
-        </div>
-      
-        <div class="form-group">
-          <label for="age">Age:</label>
-          <input id="age" formControlName="age" type="number" />
-          <div *ngIf="submitted && f['age'].errors">
-            <small *ngIf="f['age'].errors['required']" class="error">Age is required.</small>
-            <small *ngIf="f['age'].errors['min']" class="error">You must be at least 18 years old.</small>
-          </div>
-        </div>
-      
-        <div class="form-group">
-          <label for="feedback">Feedback:</label>
-          <textarea id="feedback" formControlName="feedback"></textarea>
-          <div *ngIf="submitted && f['feedback'].errors">
-            <small *ngIf="f['feedback'].errors['required']" class="error">Feedback is required.</small>
-          </div>
-        </div>
-        <button type="submit">Submit</button>
-      </form>  
-</body>
-</html>
+<form [formGroup]="surveyForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="name">Name:</label>
+      <input id="name" type="text" formControlName="name">
+      <div *ngIf="name?.invalid && name?.touched">
+        <small *ngIf="name?.errors?.['required']">Name is required</small>
+      </div>
+    </div>
+  
+    <div>
+      <label for="email">Email:</label>
+      <input id="email" type="email" formControlName="email">
+      <div *ngIf="email?.invalid && email?.touched">
+        <small *ngIf="email?.errors?.['required']">Email is required</small>
+        <small *ngIf="email?.errors?.['email']">Invalid email format</small>
+      </div>
+    </div>
+  
+    <div>
+      <label for="age">Age:</label>
+      <input id="age" type="number" formControlName="age">
+      <div *ngIf="age?.invalid && age?.touched">
+        <small *ngIf="age?.errors?.['required']">Age is required</small>
+        <small *ngIf="age?.errors?.['min']">Input a valid age</small>
+      </div>
+    </div>
+  
+    <div>
+      <label for="feedback">Feedback:</label>
+      <textarea id="feedback" formControlName="feedback"></textarea>
+      <div *ngIf="feedback?.invalid && feedback?.touched">
+        <small *ngIf="feedback?.errors?.['required']">Feedback is required.</small>
+      </div>
+    </div>
+  
+    <button type="submit" [disabled]="surveyForm.invalid">Submit</button>
+  </form>
+  

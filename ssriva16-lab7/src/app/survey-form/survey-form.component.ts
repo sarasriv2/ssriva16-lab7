@@ -1,36 +1,37 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-survey-form',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],  // Ensure this is here
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './survey-form.component.html',
   styleUrls: ['./survey-form.component.scss']
 })
 export class SurveyFormComponent {
   surveyForm: FormGroup;
-  submitted = false;
+  @Output() surveySubmitted = new EventEmitter<any>();
 
-  @Output() surveySubmitted = new EventEmitter<any>();  // Emit form data to parent
-
-  constructor() {
-    this.surveyForm = new FormGroup({
-      name: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      age: new FormControl('', [Validators.required]),
-      feedback: new FormControl('', [Validators.required])
+  constructor(private fb: FormBuilder) {
+    this.surveyForm = this.fb.group({
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      age: ['', [Validators.required, Validators.min(1)]],
+      feedback: ['', Validators.required]
     });
   }
 
   onSubmit() {
-    this.submitted = true;
     if (this.surveyForm.valid) {
-      const formData = this.surveyForm.value;
-      this.surveySubmitted.emit(formData);  // Emit form data to parent
+      this.surveySubmitted.emit(this.surveyForm.value);
+      this.surveyForm.reset();
     }
   }
 
-  get f() { return this.surveyForm.controls; }
+  get name() { return this.surveyForm.get('name'); }
+  get email() { return this.surveyForm.get('email'); }
+  get age() { return this.surveyForm.get('age'); }
+  get feedback() { return this.surveyForm.get('feedback'); }
 }

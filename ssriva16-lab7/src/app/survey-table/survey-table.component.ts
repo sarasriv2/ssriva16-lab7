@@ -9,5 +9,5 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./survey-table.component.scss']
 })
 export class SurveyTableComponent {
-  @Input() surveyResponses: any[] = [];  // Array to hold survey responses passed from the parent
+  @Input() surveyResponses: any[] = [];
 }
